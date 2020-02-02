@@ -1,0 +1,154 @@
+This file contains r code.
+
+4(a) this is an example of code for calculating yield of bond CAN 1.5 Aug 1)
+```{r}
+library(jrvFinance)
+
+bond.yield(settle='2020-01-02', mature='2021-08-01', coupon=0.015, price=99.7925,
+           freq = 2, redemption_value = 100)
+
+bond.yield(settle='2020-01-03', mature='2021-08-01', coupon=0.015, price=99.8225,
+           freq = 2, redemption_value = 100)
+
+bond.yield(settle='2020-01-06', mature='2021-08-01', coupon=0.015, price=99.8525,
+           freq = 2, redemption_value = 100)
+
+bond.yield(settle='2020-01-07', mature='2021-08-01', coupon=0.015, price=99.8225,
+           freq = 2, redemption_value = 100)
+
+bond.yield(settle='2020-01-08', mature='2021-08-01', coupon=0.015, price=99.8125,
+           freq = 2, redemption_value = 100)
+
+bond.yield(settle='2020-01-09', mature='2021-08-01', coupon=0.015, price=99.7826,
+           freq = 2, redemption_value = 100)
+
+bond.yield(settle='2020-01-10', mature='2021-08-01', coupon=0.015, price=99.7625,
+           freq = 2, redemption_value = 100)
+
+bond.yield(settle='2020-01-13', mature='2021-08-01', coupon=0.015, price=99.7425,
+           freq = 2, redemption_value = 100)
+
+bond.yield(settle='2020-01-14', mature='2021-08-01', coupon=0.015, price=99.7625,
+           freq = 2, redemption_value = 100)
+
+bond.yield(settle='2020-01-15', mature='2021-08-01', coupon=0.015, price=99.7825,
+           freq = 2, redemption_value = 100)
+
+```
+4(a) #code for plotiing yield curve
+```{r}
+ytm=read.csv("~/Desktop/yield2.csv", header=F)
+ytm
+plot(ytm$V1, ytm$V2, type = "o", col = "red", xlab = "year", ylab = "yield%", 
+   main = "yield curve")
+#plot of Jan 2
+lines(ytm$V1, ytm$V3, type = "o", col="green")
+#plot of Jan 3
+lines(ytm$V1, ytm$V4, type = "o", col="blue")
+#plot of Jan 6
+lines(ytm$V1, ytm$V5, type = "o", col="gray")
+#plot of Jan 7
+lines(ytm$V1, ytm$V6, type = "o", col="black")
+#plot of Jan 8
+lines(ytm$V1, ytm$V7, type = "o", col="yellow")
+#plot of Jan 9
+lines(ytm$V1, ytm$V8, type = "o", col="orange")
+#plot of Jan 10
+lines(ytm$V1, ytm$V9, type = "o", col="pink")
+#plot of Jan 13
+lines(ytm$V1, ytm$V10, type = "o", col="lightblue")
+#plot of Jan 14
+lines(ytm$V1, ytm$V11, type = "o", col="purple")
+#plot of Jan 15
+```
+
+4(b) 
+use bootstrapping calculating spot rate:
+for the first bond (mature in 0.5 year):
+  r(0.5)= r(t1) = -LN(P/N)/0.5
+  
+for the second bond (mature within 0.5-1 year:
+  r(t2)= -LN(P-P1*EXP(r(0.5)*0.5)/P2)*(1/t2)
+  
+for the third bond, bootstrap with r(t1), r(t2), P2, P3...
+continue the process can solve for all r(i), which 0 < i <= 5
+
+r code for plotting spot curve:
+```{r}
+spot=read.csv("~/Desktop/spot.csv", header=F)
+spot
+plot(spot$V1, spot$V2, type = "o", col = "red", xlab = "year", ylab = "spot rate%", 
+   main = "spot curve")
+#plot of Jan 2
+lines(spot$V1,spot$V3, type = "o", col="green")
+#plot of Jan 3
+lines(spot$V1, spot$V4, type = "o", col="blue")
+#plot of Jan 6
+lines(spot$V1, spot$V5, type = "o", col="gray")
+#plot of Jan 7
+lines(spot$V1, spot$V6, type = "o", col="black")
+#plot of Jan 8
+lines(spot$V1, spot$V7, type = "o", col="yellow")
+#plot of Jan 9
+lines(spot$V1, spot$V8, type = "o", col="orange")
+#plot of Jan 10
+lines(spot$V1, spot$V9, type = "o", col="pink")
+#plot of Jan 13
+lines(spot$V1, spot$V10, type = "o", col="lightblue")
+#plot of Jan 14
+lines(spot$V1, spot$V11, type = "o", col="purple")
+#plot of Jan 15
+```
+
+4(c) forward rate
+```{r}
+forward=read.csv("~/Desktop/forward.csv", header=F)
+forward
+plot(forward$V1, forward$V2, type = "o", col = "red", xlab = "year", ylab = "forward rate%", 
+   main = "forward curve" )
+#plot of Jan 2
+lines(forward$V1, forward$V3, type = "o", col="green")
+#plot of Jan 3
+lines(forward$V1, forward$V4, type = "o", col="blue")
+#plot of Jan 6
+lines(forward$V1, forward$V5, type = "o", col="gray")
+#plot of Jan 7
+lines(forward$V1, forward$V6, type = "o", col="black")
+#plot of Jan 8
+lines(forward$V1, forward$V7, type = "o", col="yellow")
+#plot of Jan 9
+lines(forward$V1, forward$V8, type = "o", col="orange")
+#plot of Jan 10
+lines(forward$V1, forward$V9, type = "o", col="pink")
+#plot of Jan 13
+lines(forward$V1, forward$V10, type = "o", col="lightblue")
+#plot of Jan 14
+lines(forward$V1, forward$V11, type = "o", col="purple")
+#plot of Jan 15
+```
+
+6)
+```{r}
+logreturn=read.csv("~/Desktop/cova.csv", header=F)
+logreturn
+cov(logreturn)
+```
+
+```{r}
+forwardlog=read.csv("~/Desktop/forwardlog.csv", header=F)
+forwardlog
+cov(forwardlog)
+```
+
+```{r}
+yieldcov <- cov(logreturn)
+yieldcov
+yieldev <- eigen(yieldcov)
+yieldev
+```
+```{r}
+forwardcov <- cov(forwardlog)
+forwardcov
+forwardev <- eigen(forwardcov)
+forwardev
+```
